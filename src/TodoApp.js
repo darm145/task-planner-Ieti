@@ -18,20 +18,21 @@ class TodoApp extends React.Component {
             <label htmlFor="new-todo">
               What needs to be done?
             </label>
-            <input
+            <input type="text"
               id="text-todo"
-              onChange={(e)=>this.handleChange(e)}
               value={this.state.text}
+              onChange={this.handleChange}
+              
             />
             <input type="number"
               id="priority-todo"
             
-              onChange={this.handleChangeE}
+              onChange={this.handleChange}
               value={this.state.priority}
             />
             <input type="date"
               id="date-todo"
-              //onChange={this.handleChange}
+              onChange={this.handleChange}
               value={this.state.dueDate}
             />
             <button>
@@ -46,12 +47,11 @@ class TodoApp extends React.Component {
   
     handleChange(e) {
         //revisar aca valores
-        this.setState({ text: e.target.value });
+        this.setState({ text: document.getElementById("text-todo").value });
+        this.setState({ priority: document.getElementById("priority-todo").value });
+        this.setState({ dueDate: document.getElementById("date-todo").value });
     }
-    handleChangeE(e) {
-        //revisar aca valores
-        this.setState({ priority: e.target.value });
-    }
+    
     handleSubmit(e) {
       e.preventDefault();
       if (!this.state.text.length) {
