@@ -6,8 +6,8 @@ export class TodoList extends React.Component{
         super(props);
     }
     render(){
-        const list=this.props.todoList.map((Obj,i) =>
-           <li><Todo
+        const list=this.props.items.map((Obj,i) =>
+           <li id={i}><Todo
            res={Obj}
            />
            </li> 
