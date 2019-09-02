@@ -12,50 +12,62 @@ class App extends React.Component {
     constructor(props) {
         super(props);
     }
-    LoggedIn(isLoggedIn){
-        if (!isLoggedIn){
-            return (<li><Link to="/">Login</Link></li>);
-        }
-        else{
-            return (<li><Link to="/todo">Todo</Link></li>);
-        }
-        
-        
-
-    }
-    render() {
+    LoggedIn(logged) {
+        console.log(logged);
         const LoginView = () => (
             <Login />
         );
-        
+
         const About = () => (
             <div>
                 <TodoApp />
-        
+
             </div>);
-        if(localStorage.getItem('isLoggedIn')== undefined){
-            localStorage.setItem('isLoggedIn',false);
+        if (!logged) {
+            return (
+                <div>
+                    <ul>
+                        <li><Link to="/">Login</Link></li>
+                    </ul>
+                    <div>
+                        <Route exact path="/" component={LoginView} />
+                    </div>
+                </div>
+            );
         }
-        const isLoggedIn = localStorage.getItem('isLoggedin');
+        else {
+            return (
+                <div>
+                    <ul>
+                    <li><Link to="/todo">Todo</Link></li>
+                    </ul>
+                    <div>
+                    <Route path="/todo" component={About} />
+                    </div>
+                </div>
+            );
+        }
+
+
+
+    }
+    render() {
+        
+        if (localStorage.getItem('isLoggedIn') == undefined) {
+            localStorage.setItem('isLoggedIn', false);
+        }
+        const loged = localStorage.getItem('isLoggedin');
         return (
             <Router>
                 <div className="App">
+                {this.LoggedIn(loged)}
                     <header className="App-header">
-                        <img src={logo} className="App-logo" alt="logo"/>
-                        <h1 className="App-title">TODO React App</h1>
+                        <img src={logo} className="App-logo" alt="logo" />
+                        <h1 className="App-title">IETI App</h1>
                     </header>
 
-                    <br/>
-                    <br/>
-
-                    <ul>
-                        {this.LoggedIn(isLoggedIn)}
-                    </ul>
-
-                    <div>
-                        <Route exact path="/" component={LoginView}/>
-                        <Route path="/todo" component={About}/>
-                    </div>
+                    <br />
+                    <br /> 
                 </div>
             </Router>
         );

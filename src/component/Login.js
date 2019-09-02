@@ -37,7 +37,7 @@ export class Login extends React.Component{
                         <Typography variant="headline">Sign in</Typography>
                         <form className="form">
                             <FormControl margin="normal" required fullWidth>
-                                <InputLabel htmlFor="email">Email Address</InputLabel>
+                                <InputLabel htmlFor="email">UserName</InputLabel>
                                 <Input id="email" name="email" autoComplete="email" autoFocus />
                             </FormControl>
                             <FormControl margin="normal" required fullWidth>
