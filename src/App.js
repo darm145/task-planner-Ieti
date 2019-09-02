@@ -12,7 +12,17 @@ class App extends React.Component {
     constructor(props) {
         super(props);
     }
+    LoggedIn(isLoggedIn){
+        if (!isLoggedIn){
+            return (<li><Link to="/">Login</Link></li>);
+        }
+        else{
+            return (<li><Link to="/todo">Todo</Link></li>);
+        }
+        
+        
 
+    }
     render() {
         const LoginView = () => (
             <Login />
@@ -23,6 +33,10 @@ class App extends React.Component {
                 <TodoApp />
         
             </div>);
+        if(localStorage.getItem('isLoggedIn')== undefined){
+            localStorage.setItem('isLoggedIn',false);
+        }
+        const isLoggedIn = localStorage.getItem('isLoggedin');
         return (
             <Router>
                 <div className="App">
@@ -35,8 +49,7 @@ class App extends React.Component {
                     <br/>
 
                     <ul>
-                        <li><Link to="/">Login</Link></li>
-                        <li><Link to="/todo">Todo</Link></li>
+                        {this.LoggedIn(isLoggedIn)}
                     </ul>
 
                     <div>

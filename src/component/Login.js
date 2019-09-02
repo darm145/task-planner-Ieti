@@ -11,7 +11,19 @@ import Typography from '@material-ui/core/Typography';
 import './Login.css'
 
 
+
 export class Login extends React.Component{
+    checkdata(){
+        const email=document.getElementById("email").value;
+        const password=document.getElementById("password").value
+        
+        if( email!="" &&  password!=""){
+            localStorage.setItem("isLoggedin",true);
+            localStorage.setItem("mailLogged",email);
+            localStorage.setItem("passwordLogged",password);
+        }
+        
+    }
 
     render(){
         return (
@@ -43,6 +55,7 @@ export class Login extends React.Component{
                                 variant="raised"
                                 color="primary"
                                 className="submit"
+                                onClick={this.checkdata}
                             >
                                 Sign in
                             </Button>

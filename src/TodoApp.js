@@ -55,19 +55,19 @@ export class TodoApp extends React.Component {
               onChange={this.handleChange}
               value={this.state.dueDate}
             />
-            <Button color="primary" type="submit">
+            <Button variant="contained" color="primary" type="submit">
               Add #{this.state.items.length + 1}
             </Button>
           </form>
         </div>
-        <div id="Login"><Login></Login></div>
+        {/** <div id="Login"><Login></Login></div> */}
         
       </div>
     );
   }
 
   handleChange(e) {
-    //revisar aca valores
+    
     this.setState({ text: document.getElementById("text-todo").value });
     this.setState({ priority: document.getElementById("priority-todo").value });
     this.setState({ dueDate: document.getElementById("date-todo").value });
