@@ -60,7 +60,7 @@ class App extends React.Component {
         return (
             <Router>
                 <div className="App">
-                {this.LoggedIn(loged)}
+                
                     <header className="App-header">
                         <img src={logo} className="App-logo" alt="logo" />
                         <h1 className="App-title">IETI App</h1>
@@ -68,6 +68,7 @@ class App extends React.Component {
 
                     <br />
                     <br /> 
+                    {this.LoggedIn(loged)}
                 </div>
             </Router>
         );
