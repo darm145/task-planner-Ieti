@@ -7,6 +7,7 @@ import DatePicker from 'react-datepicker';
 import Card from '@material-ui/core/Card';
 import "react-datepicker/dist/react-datepicker.css";
 import "./TodoApp.css"
+import Drawer from "./Drawer.js"
 import MenuItem from '@material-ui/core/MenuItem';
 import { makeStyles } from '@material-ui/core/styles';
 export class TodoApp extends React.Component {
@@ -29,6 +30,7 @@ export class TodoApp extends React.Component {
     ]
     return (
       <div>
+        <Drawer></Drawer>
         <h2>Bienvenido {localStorage.getItem("mailLogged")}</h2>
         <h3>Manejador de tareas</h3>
         <div>
@@ -77,16 +79,11 @@ export class TodoApp extends React.Component {
 
 
         {/** <div id="Login"><Login></Login></div> */}
-        <Button variant="contained" color="secondary" onClick={this.logOut}>
-          Salir
-            </Button>
+       
       </div>
     );
   }
-  logOut() {
-    localStorage.removeItem("isLoggedin");
-    window.location.reload();
-  }
+  
 
   handleChange(e) {
 
