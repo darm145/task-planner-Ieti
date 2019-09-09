@@ -9,6 +9,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import Face from '@material-ui/icons/Face';
 import Menu from '@material-ui/icons/Menu';
+import IconButton from '@material-ui/core/IconButton';
 
 function logOut() {
   localStorage.removeItem("isLoggedin");
@@ -51,8 +52,10 @@ export default function TemporaryDrawer() {
   );
   return (
     <div>
-      <Button onClick={toggleDrawer('left', true)}>Open Left</Button>
-
+      
+      <IconButton className="btn" aria-label="Menu" onClick={toggleDrawer('left', true)}>
+          <Menu></Menu>
+        </IconButton>
       <Drawer open={state.left} onClose={toggleDrawer('left', false)}>
         {sideList('left')}
       </Drawer>
