@@ -14,37 +14,14 @@ class App extends React.Component {
     }
     LoggedIn(logged) {
         console.log(logged);
-        const LoginView = () => (
-            <Login />
-        );
-
-        const About = () => (
-            <div>
-                <TodoApp />
-
-            </div>);
         if (!logged) {
             return (
-                <div>
-                    <ul>
-                        <li><Link to="/">Login</Link></li>
-                    </ul>
-                    <div>
-                        <Route exact path="/" component={LoginView} />
-                    </div>
-                </div>
+                <Login />
             );
         }
         else {
             return (
-                <div>
-                    <ul>
-                    <li><Link to="/todo">Todo</Link></li>
-                    </ul>
-                    <div>
-                    <Route path="/todo" component={About} />
-                    </div>
-                </div>
+                <TodoApp />
             );
         }
 
@@ -60,14 +37,6 @@ class App extends React.Component {
         return (
             <Router>
                 <div className="App">
-                
-                    <header className="App-header">
-                        <img src={logo} className="App-logo" alt="logo" />
-                        <h1 className="App-title">IETI App</h1>
-                    </header>
-
-                    <br />
-                    <br /> 
                     {this.LoggedIn(loged)}
                 </div>
             </Router>

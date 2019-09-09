@@ -12,14 +12,14 @@ export class Todo extends React.Component {
         return (
             <Card>
                 <CardContent>
-                    < Typography variant="h3" component="h2" >
-                        text : {this.props.res.text}
+                    < Typography variant="h4" component="h2" >
+                        Descripción : {this.props.res.text}
                     </Typography >
-                    < Typography variant="h5" component="h2" >
-                        priority : {this.props.res.priority}
+                    < Typography   >
+                        {this.props.res.status} - {this.props.res.dueDate.toString()}
                     </Typography >
                     <Typography  color="textPrimary" gutterBottom>
-                        due date: {this.props.res.dueDate.toString()}
+                        Autor: {localStorage.getItem("mailLogged")}
                     </Typography >
                 </CardContent>
             </Card>

@@ -1,0 +1,17 @@
+.insertCard{
+    float: left;
+    margin:2.5%;
+    width: 90%;
+    max-width: 400px;
+    
+   
+}
+.insertTask{
+    max-width: 400px;
+    float:right;
+    margin:2.5%;
+    
+}
+.fix{
+    clear:both;
+}

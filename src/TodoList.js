@@ -7,15 +7,14 @@ export class TodoList extends React.Component{
     }
     render(){
         const list=this.props.items.map((Obj,i) =>
-           <li id={i}><Todo
-           res={Obj}
-           />
-           </li> 
+           <Todo key={i}
+           res={Obj}/>
+           
         );
         
         
         return (
-            <ul>{list}</ul>
+            <div className="insertTask"> {list} </div>
             
         );
     }

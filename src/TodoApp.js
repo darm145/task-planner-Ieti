@@ -3,72 +3,83 @@ import { TodoList } from './TodoList.js'
 import { Login } from './component/Login'
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
-import  DatePicker  from 'react-datepicker';
+import DatePicker from 'react-datepicker';
+import Card from '@material-ui/core/Card';
 import "react-datepicker/dist/react-datepicker.css";
-
-
+import "./TodoApp.css"
+import MenuItem from '@material-ui/core/MenuItem';
+import { makeStyles } from '@material-ui/core/styles';
 export class TodoApp extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { items: [], text: '', priority: 0, dueDate: new Date() };
+    this.state = { items: [], text: '', status: '', dueDate: new Date() };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleDate = this.handleDate.bind(this);
+    this.handleStatus = this.handleStatus.bind(this); 
   }
 
+
   render() {
+    
+    
+    const estados = [
+      { status: "Completed" }, { status: "In Progess" }, { status: "Ready" }
+    ]
     return (
       <div>
+        <h2>Bienvenido {localStorage.getItem("mailLogged")}</h2>
+        <h3>Manejador de tareas</h3>
         <div>
-          <h2>Welcome {localStorage.getItem("mailLogged")}</h2>
-          <h3>TODO</h3>
+          <Card className="insertCard">
+            <form onSubmit={this.handleSubmit}>
+              <TextField
+                id="text-todo"
+                label="Actividad"
+                value={this.state.text}
+                onChange={this.handleChange}
+                margin="normal"
+              />
+              <p></p>
+             
+              <TextField
+                id="priority-todo"
+                select
+                label="Seleccione"
+                value={this.state.status}
+                onChange={this.handleStatus}
+                helperText="Por favor seleccione el estado"
+                margin="normal"
+              >
+                {estados.map(option => (
+                  <MenuItem key={option.status} value={option.status}>
+                    {option.status}
+                  </MenuItem>
+                ))}
+              </TextField>
+              <p></p>
+              <DatePicker
+                id="date-todo"
+                selected={this.state.dueDate}
+                onChange={this.handleDate} />
+              <p></p>
+              <Button variant="contained" color="primary" type="submit">
+                Agregar #{this.state.items.length + 1}
+              </Button>
+            </form>
+          </Card>
+
           <TodoList items={this.state.items} />
-          <form onSubmit={this.handleSubmit}>
-            {/** 
-            <label htmlFor="new-todo">
-              What needs to be done?
-            </label>
-            <input type="text"
-              id="text-todo"
-              value={this.state.text}
-              onChange={this.handleChange}
-            />
-            */}
-            <TextField
-              id="text-todo"
-              label="Text"
 
-              value={this.state.text}
-              onChange={this.handleChange}
-              margin="normal"
-            />
-            <TextField
-              id="priority-todo"
-              label="Number"
-              type="number"
-              value={this.state.priority}
-              onChange={this.handleChange}
-              margin="normal"
-            />
-            
-            <DatePicker
-            id="date-todo"
-              selected={this.state.dueDate}
-              onChange={this.handleDate}/>
-              
-              
-    
-            <Button variant="contained" color="primary" type="submit">
-              Add #{this.state.items.length + 1}
-            </Button>
-          </form>
-          <Button variant="contained" color="secondary" onClick={this.logOut}>
-            Log out
-            </Button>
+          <br className="fix" />
         </div>
-        {/** <div id="Login"><Login></Login></div> */}
 
+
+        {/** <div id="Login"><Login></Login></div> */}
+        <Button variant="contained" color="secondary" onClick={this.logOut}>
+          Salir
+            </Button>
       </div>
     );
   }
@@ -80,11 +91,16 @@ export class TodoApp extends React.Component {
   handleChange(e) {
 
     this.setState({ text: document.getElementById("text-todo").value });
-    this.setState({ priority: document.getElementById("priority-todo").value });
-    
+    //this.setState({ status: document.getElementById("priority-todo").value });
+
   }
-  handleDate(e){
-    this.setState({dueDate:e});
+  handleStatus(e){
+    console.log(e.target.value);
+    this.setState({ status: e.target.value });
+  }
+
+  handleDate(e) {
+    this.setState({ dueDate: e });
   }
 
   handleSubmit(e) {
@@ -94,7 +110,7 @@ export class TodoApp extends React.Component {
     }
     const newItem = {
       text: this.state.text,
-      priority: this.state.priority,
+      status: this.state.status,
       dueDate: this.state.dueDate
     };
     console.log(newItem);
