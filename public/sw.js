@@ -1,14 +1,34 @@
-importScripts('/cache-polyfill.js');
 
 
-self.addEventListener('install', function(e) {
- e.waitUntil(
-   caches.open('taskplanner').then(function(cache) {
-     return cache.addAll([
-         '/'
-     ]);
-   })
- );
+self.addEventListener('activate', event => {
+  console.log('Activating new service worker...');
+
+  const cacheWhitelist = ["taskplanner"];
+
+  event.waitUntil(
+    caches.keys().then(cacheNames => {
+      return Promise.all(
+        cacheNames.map(cacheName => {
+          if (cacheWhitelist.indexOf(cacheName) === -1) {
+            return caches.delete(cacheName);
+          }
+        })
+      );
+    })
+  );
+});
+
+
+self.addEventListener('install', event => {
+  console.log('Attempting to install service worker and cache static assets');
+  event.waitUntil(
+    caches.open("taskplanner")
+    .then(cache => {
+      return cache.addAll([
+        '/index.html'
+      ]);
+    })
+  );
 });
 
 self.addEventListener('fetch', function(event) {
@@ -26,3 +46,4 @@ self.addEventListener('fetch', function(event) {
     );
     
     });
+   
