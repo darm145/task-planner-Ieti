@@ -1,49 +1,47 @@
+var doCache = true; // Set this to true for production
 
+var CACHE_NAME = "my-pwa-cache-v1";
 
-self.addEventListener('activate', event => {
-  console.log('Activating new service worker...');
-
-  const cacheWhitelist = ["taskplanner"];
-
+self.addEventListener("activate", event => {
+  const cacheWhitelist = [CACHE_NAME];
   event.waitUntil(
-    caches.keys().then(cacheNames => {
-      return Promise.all(
-        cacheNames.map(cacheName => {
-          if (cacheWhitelist.indexOf(cacheName) === -1) {
-            return caches.delete(cacheName);
+    caches.keys().then(keyList =>
+      Promise.all(
+        keyList.map(key => {
+          if (!cacheWhitelist.includes(key)) {
+            console.log("Deleting cache: " + key);
+            return caches.delete(key);
           }
         })
-      );
-    })
+      )
+    )
   );
 });
 
-
-self.addEventListener('install', event => {
-  console.log('Attempting to install service worker and cache static assets');
-  event.waitUntil(
-    caches.open("taskplanner")
-    .then(cache => {
-      return cache.addAll([
-        '/index.html'
-      ]);
-    })
-  );
-});
-
-self.addEventListener('fetch', function(event) {
-
-    console.log(event.request.url);
-    
-    event.respondWith(
-    
-    caches.match(event.request).then(function(response) {
-    
-    return response || fetch(event.request);
-    
-    })
-    
+self.addEventListener("install", function(event) {
+  if (doCache) {
+    event.waitUntil(
+      caches.open(CACHE_NAME).then(function(cache) {
+        fetch("manifest.json")
+          .then(response => {
+            response.json();
+          })
+          .then(assets => {
+            const urlsToCache = ["/", assets["main.js"]];
+            cache.addAll(urlsToCache);
+            console.log("cached");
+          });
+      })
     );
-    
-    });
-   
+  }
+});
+
+self.addEventListener("fetch", function(event) {
+  if (doCache) {
+    event.respondWith(
+      caches.match(event.request).then(function(response) {
+        return response || fetch(event.request);
+      })
+    );
+  }
+});

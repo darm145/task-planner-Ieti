@@ -21,7 +21,7 @@ const isLocalhost = Boolean(
 );
 
 export function register(config) {
-  if ('serviceWorker' in navigator) {
+  if (process.env.NODE_ENV === 'production' && 'serviceWorker' in navigator) {
     // The URL constructor is available in all browsers that support SW.
     const publicUrl = new URL(process.env.PUBLIC_URL, window.location.href);
     if (publicUrl.origin !== window.location.origin) {
@@ -32,7 +32,7 @@ export function register(config) {
     }
 
     window.addEventListener('load', () => {
-      const swUrl = `${process.env.PUBLIC_URL}/sw.js`;
+      const swUrl = `${process.env.PUBLIC_URL}/service-worker.js`;
 
       if (isLocalhost) {
         // This is running on localhost. Let's check if a service worker still exists or not.
@@ -55,22 +55,16 @@ export function register(config) {
 }
 
 function registerValidSW(swUrl, config) {
-  console.log(swUrl);
-  console.log("/////////////////////////////////////////7");
   navigator.serviceWorker
-    .register(swUrl ,{
-      scope: '../'
-     })
+    .register(swUrl)
     .then(registration => {
       registration.onupdatefound = () => {
         const installingWorker = registration.installing;
         if (installingWorker == null) {
-          console.log(1);
           return;
         }
         installingWorker.onstatechange = () => {
           if (installingWorker.state === 'installed') {
-            console.log(2);
             if (navigator.serviceWorker.controller) {
               // At this point, the updated precached content has been fetched,
               // but the previous service worker will still serve the older
@@ -82,7 +76,6 @@ function registerValidSW(swUrl, config) {
 
               // Execute callback
               if (config && config.onUpdate) {
-                console.log(3);
                 config.onUpdate(registration);
               }
             } else {
@@ -93,7 +86,6 @@ function registerValidSW(swUrl, config) {
 
               // Execute callback
               if (config && config.onSuccess) {
-                console.log(4);
                 config.onSuccess(registration);
               }
             }
